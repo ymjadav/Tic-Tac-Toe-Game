@@ -1,5 +1,5 @@
 let boxes = document.querySelectorAll(".box");
-let resetBtn = document.querySelector("#reset-btn");
+let resetBtn = document.querySelector(".reset-btn");
 let newGameBtn = document.querySelector("#new-btn");
 let msgContainer = document.querySelector(".msg-container");
 let msg = document.querySelector("#msg");
@@ -21,11 +21,13 @@ const resetGame = () => {
   count = 0;
   enableBoxes();
   msgContainer.classList.add("hide");
+  resetBtn.classList.add("hide");
 };
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     if (turn0) {
       box.innerText = "O";
+      box.style.color = "blue";
       turn0 = false;
     } else {
       box.innerText = "X";
@@ -34,6 +36,9 @@ boxes.forEach((box) => {
     box.disabled = true;
     count++;
 
+    if (count === 1) {
+      resetBtn.classList.remove("hide");
+    }
     let isWinner = cheackwinner();
 
     if (count === 9 && !isWinner) {
@@ -45,8 +50,8 @@ boxes.forEach((box) => {
 const gameDraw = () => {
   msg.innerText = "Game was Draw.";
   msgContainer.classList.remove("hide");
+  resetBtn.classList.add("hide");
   disableBoxes;
-  resetBtn.remove();
 };
 
 const disableBoxes = () => {
@@ -64,6 +69,7 @@ const enableBoxes = () => {
 const showWinner = (Winner) => {
   msg.innerText = `Congratilation, Winner Is ${Winner}`;
   msgContainer.classList.remove("hide");
+  resetBtn.classList.add("hide");
   disableBoxes();
 };
 
